@@ -1,0 +1,42 @@
+# This workflow is code-only. Data, plate model, and rendered outputs are
+# distributed separately (Zenodo / Alfonso et al. 2024) and must never be committed.
+
+# Data (distributed via Zenodo)
+*.csv
+*.parquet
+*.nc
+*.npy
+*.pkl
+*.pickle
+
+# Plate model (third-party — Alfonso et al. 2024) and downloaded model repos
+*.gpml
+*.gpmlz
+*.rot
+*.shp
+*.shx
+*.dbf
+*.prj
+*.gpkg
+alfonso_model/
+None/
+plate-model-repo/
+
+# Rendered figures / animations / caches
+out/
+data/
+Figures/
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.pdf
+*.gif
+*.mp4
+
+# Python / Jupyter
+__pycache__/
+*.pyc
+*.log
+.ipynb_checkpoints/
+.DS_Store

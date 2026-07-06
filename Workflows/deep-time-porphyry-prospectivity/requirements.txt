@@ -1,0 +1,39 @@
+# Deep-Time Porphyry Copper Prospectivity — Python dependencies
+# (project-local modules reconstruction_grid / spatiotemporal_sampling from the
+#  deep-time-mining backend, and the parent pyDTDM package, are NOT on PyPI —
+#  clone them alongside this workflow.)
+
+# core
+numpy
+pandas
+scipy
+pyyaml
+
+# geospatial
+geopandas
+xarray
+netCDF4
+pyproj
+cartopy
+cmcrameri
+
+# plate reconstruction
+gplately
+plate-model-manager
+
+# machine learning
+scikit-learn
+xgboost
+lightgbm
+imbalanced-learn
+pulearn
+smote-variants
+
+# figures / notebooks / animation
+matplotlib
+seaborn
+Pillow
+imageio
+imageio-ffmpeg
+ipython
+jupyter

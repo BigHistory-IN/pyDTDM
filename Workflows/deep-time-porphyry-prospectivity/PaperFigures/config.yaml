@@ -1,0 +1,61 @@
+# =============================================================================
+# Paper figures & animations — single config source (Singh et al., Geology)
+# Every input path, the plate model, style, and the output dir live HERE.
+# Scripts: figlib.configure(figlib.load_config("config.yaml")) then read cfg[...].
+# Figures are regenerated from the CORRECTED kalpa workflow outputs (spatial=138
+# features, spatiotemporal=31), with HONEST block-CV performance. Plate = alfonso2024.
+# =============================================================================
+
+out_dir:   out
+cache_dir: data
+
+plate_model:
+  name:     alfonso2024
+  data_dir: ./alfonso_model
+  offline:  true          # use the local model dir only (no network fetch)
+
+# ---- corrected kalpa workflow outputs ----
+spatial:
+  prospectivity_nc:        <DATA_ROOT>/SpatialProspectivity/Spatial_Data/output/grids/spatial_prospectivity.nc
+  feature_importance_csv:  <DATA_ROOT>/SpatialProspectivity/Spatial_Data/output/metrics/feature_importance.csv
+  cv_metrics_json:         <DATA_ROOT>/SpatialProspectivity/Spatial_Data/output/metrics/spatial_cv_metrics.json
+  cv_key:                  spatial_block_cv
+  success_curve_csv:       <DATA_ROOT>/SpatialProspectivity/Spatial_Data/output/metrics/success_rate_curve_blockcv.csv
+spatiotemporal:
+  max_prospectivity_nc:    <DATA_ROOT>/SpatiotemporalProspectivity/Spatiotemporal_Data/output/grids/max_prospectivity.nc
+  cube_nc:                 <DATA_ROOT>/SpatiotemporalProspectivity/Spatiotemporal_Data/output/grids/prospectivity_cube.nc
+  feature_importance_csv:  <DATA_ROOT>/SpatiotemporalProspectivity/Spatiotemporal_Data/output/metrics/feature_importance.csv
+  group_importance_csv:    <DATA_ROOT>/SpatiotemporalProspectivity/Spatiotemporal_Data/output/metrics/group_importance.csv
+  cv_metrics_json:         <DATA_ROOT>/SpatiotemporalProspectivity/Spatiotemporal_Data/output/metrics/spatiotemporal_cv_metrics.json
+  cv_key:                  spatiotemporal_block_cv
+  success_curve_csv:       <DATA_ROOT>/SpatiotemporalProspectivity/Spatiotemporal_Data/output/metrics/success_rate_curve_blockcv.csv
+
+# ---- hyperdimensional map (Fig1 bottom) = spatial x max-spatiotemporal (regenerated) ----
+hyperdimensional:
+  combined_nc: data/combined_hyperdimensional.nc      # produced by scripts/combine_hyperdimensional.py
+  percentiles: [0, 50, 80, 90, 95, 98, 99, 100]
+
+# ---- deep-time fields (globes + animation; alfonso2024/Clennett frame) ----
+deeptime:
+  carbonate_dir: <DATA_ROOT>/Raw/source_data/CarbonateThickness
+  crustal_dir:   <DATA_ROOT>/Raw/source_data/CrustalThickness
+  sediment_dir:  <DATA_ROOT>/Raw/source_data/SedimentThickness
+
+# ---- present-day predictor rasters (Fig1 left cascade) ----
+spatial_rasters:
+  - {file: <DATA_ROOT>/Raw/Rasters/MineralIndex/hydrothermal_alteration.nc, cmap: YlOrRd, pct: [2,98], title: "Hydrothermal alteration"}
+  - {file: <DATA_ROOT>/Raw/Rasters/Magnetic/GeophysicsMag_RTP_VD.nc,        cmap: RdBu_r, pct: [3,97], title: "Magnetic anomaly (RTP-VD)"}
+  - {file: <DATA_ROOT>/Raw/Rasters/Gravity/GeophysicsGravity_HGM.nc,        cmap: cividis, pct: [2,98], title: "Gravity gradient (HGM)"}
+  - {file: <DATA_ROOT>/Raw/Rasters/Gravity/GeophysicsGravity.nc,            cmap: magma,  pct: [2,98], title: "Bouguer gravity"}
+
+deposits:
+  file: <DATA_ROOT>/Raw/Vectors/Deposits/deposits_clipped.dbf
+  age_tolerance_ma: 6
+
+style:
+  nam_extent:  [-145, -101, 27, 72]
+  globe_times: [100, 60, 20]
+  carb_vmax:   350
+  colors:      {spatial: "#e07b39", spatiotemporal: "#1b6ca8", random: "#9aa0a6", ink: "#1d1d1f"}
+  save_dpi:    300
+  n_top:       5
