@@ -1,0 +1,53 @@
+# Config file for running paleotopography.
+# Note: need to indent with spaces and NOT tabs!
+# --- input files
+InputFiles:
+    plate_kinematics:
+        # --- plate model files
+        model_name: 'Cennet2020'
+        model_dir: "<DATA_ROOT>/CopperLithium/NWMexico/plate_model/Combined/"
+        rotation_files:
+            - 'CombinedRotations.rot'
+        topology_files:
+           - 'Feature_Geometries.gpml'
+           - 'Plate_Boundaries.gpml'
+         # relative to 'model_dir'
+        coastline_file: '<DATA_ROOT>/CopperLithium/NWMexico/plate_model/StaticGeometries/Coastlines/Global_coastlines_low_res.shp'
+        static_polygon: '<DATA_ROOT>/CopperLithium/NWMexico/plate_model/StaticGeometries/StaticPolygons/Global_EarthByte_GPlates_PresentDay_StaticPlatePolygons.shp'
+        continents: '<DATA_ROOT>/CopperLithium/NWMexico/plate_model/StaticGeometries/ContinentalPolygons/Global_EarthByte_GPlates_PresentDay_ContinentalPolygons_2019_v1.shp'
+    # Time Dependent Raster 
+    # --- training files
+    Raster:
+        ETOPO_FILE: "<HOME>/Documents/PROJECT/PhD Project/Codes and Data/Part 2/A_DEEPTIMETOPO/Data/Smoothed ETopo.tif"  # ETOPO grid in meters (can be NetCDF or GeoTiff)
+        Raster_type: "Elevation"
+        # Crustal_Thickness: "/Volumes/Satyam/Documents/PROJECT/PhD Project/Codes and Data/Part 2/ECM1/ECM1_CrustalThickness.tif" # Crustal thickness grid in meters (can be NetCDF or GeoTiff)
+        # Raster_type: "Crustal_Thickness"
+# --- name of output directories
+# OutputFiles:
+#     # Output Directory
+#     output_dir: "<DATA_ROOT>/Merdith1Ga/1Ga_Reconstructions/Paleotopography"
+
+
+# --- set parameters
+TimeParameters:
+    time_min: 0.
+    time_max: 170.
+    time_step: 1
+
+
+Parameters:
+    time_window_size: 15 #### size of time window for calculating mean
+    weighted_mean: True  #### whether you wanted to use a weighted mean. In Weighted Mean, recent times will have greator weights
+    mesh_refinement_level: 9  # The initial positions of crustal points are evenly distributed within the designated region. At mesh refinement level zero, the points are approximately 20 degrees apart. Each increase in the density level results in a halving of the spacing between points. Higher refinement level will take longer time to run.
+    mantle_optimised_id: 0    ### Specify reference frame here
+    paleomag_id: 0     
+    # for parts that have multiprocessing, specify CPU number
+    number_of_cpus: -1  ### No of cores to use or None for a single core
+   
+
+GridParameters:
+    # Control resolution parameters of the NetCDF
+    grid_spacing: 0.1  # spacing in degrees
+    compression:     ### this option is used to compress netcdf to smaller file while saving
+        zlib: True  
+        complevel: 5
